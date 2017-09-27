@@ -1,0 +1,17 @@
+
+.normal {
+  box-sizing: border-box;
+  padding-bottom: 120px;
+  min-height: 100%;
+}
+.normal :global(.am-card){
+  padding-bottom: 0;
+}
+.normal :global(.am-card)~:global(.am-card){
+  margin-top: 20px;
+}
+
+.normal :global(.am-card .am-card-body){
+  height: 100px;
+  padding:0 30px;
+}

@@ -1,0 +1,36 @@
+
+.normal {
+  padding-bottom: 100px;
+}
+#section-select{
+  padding: 60px 15px 60px 30px;
+  border-bottom: 1px solid #ddd;
+}
+.select-list~.select-list{
+  margin-top: 30px;
+}
+.select-list :global(.item){
+  box-sizing: border-box;
+  height: 86px;
+  line-height: 86px;
+  text-align: center;
+  margin-right: 15px;
+  flex: 0 1 33.333%;
+  font-size: 34px;
+  color: @brand-primary;
+  border: 1px solid @brand-primary;
+  border-radius: 6px;
+}
+:global(.item).blank-item{
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+}
+.select-list :global(.item.active){
+  color: #fff;
+  background-color: @brand-primary;
+}
+#payway-box :global(.am-list-item img){
+    width: 52px;
+    height: 42px;
+}

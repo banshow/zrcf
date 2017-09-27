@@ -1,0 +1,6 @@
+
+.normal {
+}
+.st-tabs :global(.am-tabs-bar){
+  display:-webkit-box;
+}

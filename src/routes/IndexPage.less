@@ -1,0 +1,59 @@
+.home-icon{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/home.png) center center /  44px 37px no-repeat
+}
+.home-icon-sel{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/home_sel.png) center center /  44px 37px no-repeat
+}
+.order-icon{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/order.png) center center /  34px 36px no-repeat
+}
+.order-icon-sel{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/order_sel.png) center center /  34px 36px no-repeat
+}
+.my-icon{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/my.png) center center /  32px 39px no-repeat
+}
+.my-icon-sel{
+  width: 44px;
+  height: 44px;
+  background: url(../assets/my_sel.png) center center /  32px 39px no-repeat
+}
+.btn{
+  width: 420px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 32px;
+  border-radius: 50px;
+}
+.asset-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding:40px 0;
+}
+.asset-box .asset-item{
+  flex-grow: 1;
+  position: relative;
+}
+.asset-item div{
+  text-align: center;
+}
+.asset-item~.asset-item::before{
+  position: absolute;
+  top:19px;
+  height: 48px;
+  width: 2px;
+  background-color: #eee;
+  content: '';
+}

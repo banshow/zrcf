@@ -1,0 +1,65 @@
+
+.normal {
+}
+#login-head{
+  padding: 80px 0;
+  text-align: center;
+  background-color: #fff;
+}
+#login-form :global(.am-list-item.am-input-item){
+  padding-left: 40px;
+  padding-right: 40px;
+}
+#login-form :global(.am-list-item.am-input-item):after {
+  left: 40px;
+  right: 40px;
+  width: auto;
+  border-bottom: 1px solid #eee;
+}
+#login-code :global(.am-list-item.am-input-item):after {
+  border-bottom: none;
+}
+#login-code{
+  position: relative;
+}
+#login-code::after{
+  display: block;
+  position: absolute;
+  content: '';
+  left: 40px;
+  right: 40px;
+  top:100%;
+  width: auto;
+  border-bottom: 1px solid #eee;
+}
+#login-code :global(.am-list-item.am-input-item){
+  box-sizing: border-box;
+  width: 460px;
+}
+#login-code-hr{
+  width: 1px;
+  height: 50px;
+  background-color: @brand-primary;
+}
+#login-code-btn{
+  margin-left: 54px;
+  font-size: 32px;
+  color:@brand-primary;
+}
+#login-form :global(.am-input-control) input{
+  font-size: 32px;
+}
+
+#login-btn{
+  width: 100%;
+  margin-top: 100px;
+  border-radius: 2px;
+  height: 100px;
+  line-height: 100px;
+}
+#vl{
+  height: 28px;
+  width: 1px;
+  background-color: #eee;
+  margin: 0 20px;
+}

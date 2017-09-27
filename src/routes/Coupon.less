@@ -1,0 +1,36 @@
+
+.normal {
+}
+.coupon-list{
+  padding: 30px;
+}
+.coupon-list :global(.item){
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 240px;
+}
+.coupon-list :global(.item)~:global(.item){
+  margin-top:20px;
+}
+.coupon-list :global(.item .head){
+  width: 240px;
+  height: 100%;
+  background-image: url("../assets/coupon_r.png");
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: 240px 240px;
+}
+.coupon-list :global(.item .head.gray){
+  background-image: url("../assets/coupon_g.png");
+}
+.coupon-list :global(.item .body){
+  box-sizing: border-box;
+  padding-left: 30px;
+  flex-grow: 1;
+  height: 100%;
+  background-image: url("../assets/coupon_bg.png");
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: 100% 240px;
+}
