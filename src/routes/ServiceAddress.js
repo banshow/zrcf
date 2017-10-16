@@ -15,7 +15,6 @@ function ServiceAddress(props) {
         mode="dark"
         onLeftClick={() => {props.history.goBack()}}
       >服务地址</NavBar>
-      <div id={styles['content-box']}>
       {isEmpty?(<div className="empty-box flex-col flex-jc-center ai-center">
         <img src={require('../assets/noaddress.png')} style={{width:'2rem',height:'2rem'}}/>
         <div className="mt-40 lh-1 fs-34 color-6">还没有服务地址呢</div>
@@ -89,7 +88,6 @@ function ServiceAddress(props) {
         ))
       )}
 
-      </div>
       <div className="fixed-lb width-full">
         <Button className="zrcf-btn" type="primary" onClick={()=>{props.history.push('/address/add')}}>
           ＋新增地址
