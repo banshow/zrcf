@@ -10,19 +10,14 @@ export default {
     }
   },
   reducers: {
-    recharge(state,{amount}){
-      return {...state,amount:+(state.amount+(+amount)).toFixed(2)}
-    },
     init(state,{userInfo}){
       return {...state,userInfo:{...userInfo,cardCount:'10'}};
     },
   },
   effects: {
     *fetch({},{call,put}) {
-      const [usercategory,userdata] = yield [call(httpservice.post, {url:'customerAbilityOperation',param:{ac:'get'}}),call(httpservice.post, {url:'getCustomerInfo',param:{type:'user'}})]
-      let ucgs = usercategory.data.data || [];
-      let userInfo = userdata.data.data || {};
-      userInfo.isSetType = ucgs.length>0;
+      const {data, header} = yield call(httpservice.post, {url:'getCustomerInfo',param:{type:'user'}})
+      let userInfo = data.data || {};
       yield put({ type: 'init',userInfo:userInfo});
     },
   },
@@ -30,7 +25,7 @@ export default {
     setup({ dispatch, history }) {
       history.listen(({ pathname, query }) => {
         if (pathname==='/indexpage/myTab') {
-          dispatch({ type: 'user/fetch'});
+          dispatch({ type: 'fetch'});
         }
       });
     },

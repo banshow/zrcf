@@ -3,7 +3,7 @@ import {apiBaseUrl} from '../config';
 function object2fromData(param) {
   let formData = '';
   Object.getOwnPropertyNames(param).forEach((k)=>{
-    formData+='&'+k+'='+param[k];
+    formData+='&'+k+'='+encodeURIComponent(param[k]);
   })
   return formData.substring(1);
 }
@@ -63,3 +63,5 @@ export function create(values) {
     body: JSON.stringify(values),
   });
 }
+
+

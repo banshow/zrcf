@@ -1,4 +1,4 @@
-
+import * as httpservice from '../services/httpservice';
 export default {
   namespace: 'register',
   state: {
@@ -6,7 +6,9 @@ export default {
     password:'',
     code:'',
     isRead:false,
-    btnDisable:true
+    btnDisable:true,
+    countdown:60,
+    isCounting:false
   },
   reducers: {
     mobileInput(state,{value}){
@@ -20,8 +22,32 @@ export default {
     },
     selectRead(state){
       return {...state,isRead:!state.isRead,btnDisable:!(state.mobile&&state.password&&state.code&&(!state.isRead))};
+    },
+    countdown(state,{countdown}){
+      return {...state,countdown:countdown}
+    },
+    counting(state,{isCounting}){
+      return {...state,isCounting:isCounting}
+    },
+    updateCodeSession(state,{rcsid,rcshash}){
+      return {...state,rcsid:rcsid,rcshash:rcshash}
     }
   },
-  effects: {},
+  effects: {
+    *getCode({param}, {call, put}){
+      const {data, header} = yield call(httpservice.post, {
+        url: 'login',
+        param: param
+      });
+      let d = data.data || {};
+      yield put({ type: 'updateCodeSession',rcsid:d.rcsid,rcshash:d.rcshash});
+
+    },
+    *reg({param,begin,success},{call}){
+      yield call(begin);
+      const { data, headers } = yield call(httpservice.post, {url:'login',param:param});
+      yield call(success);
+    }
+  },
   subscriptions: {},
 };

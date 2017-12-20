@@ -1,10 +1,9 @@
 import dva from 'dva';
-import { hashHistory } from 'dva/router';
+import {hashHistory,browserHistory} from 'dva/router';
 import {Toast} from 'antd-mobile';
 import './index.less';
 // 1. Initialize
 const ERROR_MSG_DURATION = 2; // 3 秒
-
 // 1. Initialize
 const app = dva({
   history: hashHistory,

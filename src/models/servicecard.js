@@ -5,15 +5,15 @@ export default {
     cardData:{}
   },
   reducers: {
-    loadData(state,{data}){
-      return {...state,cardData:data};
+    loadData(state,{cardData,typeData}){
+      return {...state,cardData:cardData,typeData:typeData};
     }
 
   },
   effects: {
     *fetch({},{call,put}) {
-      const { data, headers } = yield call(httpservice.post, {url:'getCart',param:{ac:'getMyCartList'}});
-      yield put({ type: 'loadData',data:data.data||{}});
+      const { type, card } = yield [call(httpservice.post, {url:'getCart',param:{ac:'getCartType'}}),call(httpservice.post, {url:'getCart',param:{ac:'getMyCartList'}})];
+      yield put({ type: 'loadData',cardData:card.data||{},typeData:type.data||{}});
     },
   },
   subscriptions: {

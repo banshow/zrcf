@@ -15,7 +15,11 @@ function Balance(props) {
         </div>
       </div>
       <div className="fixed-lb width-full">
-        <Button className="zrcf-btn" type="primary" onClick={()=>{props.history.replaceState(null,'/recharge')}}>
+        <Button className="zrcf-btn" type="primary" onClick={()=>{
+          //let rurl = location.href.replace(location.hash,'#/recharge');
+          //location.href='http://wx.51zrcf.com/getOpenid/?rurl='+encodeURIComponent(rurl);
+          props.history.replaceState(null,'/recharge');
+        }}>
           充值
         </Button>
       </div>

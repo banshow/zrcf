@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import {NavBar, Icon,  Button, InputItem} from 'antd-mobile';
+import {NavBar, Icon,  Button, InputItem,Modal} from 'antd-mobile';
 import styles from './OrderDetail.less';
-
+const alert = Modal.alert;
 function OrderDetail(props) {
   const {orderDetail} = props.order;
   return (
@@ -100,8 +100,29 @@ function OrderDetail(props) {
       </div>
 
       <div className="zrcf-btn-group flex-row fixed-lb width-full">
-        <Button className="zrcf-btn flex-grow-1 color-bp" onClick={()=>{}}>取消订单</Button>
-        <Button className="zrcf-btn flex-grow-1" type="primary" onClick={()=>{}}>立即支付</Button>
+        <Button className={'zrcf-btn flex-grow-1 color-bp'+(orderDetail.order_status=='1'&&!(orderDetail.pay_status=='1'&&orderDetail.need_amount>0)?'':' zrcf-hide')} onClick={()=>{
+
+
+          alert('', '确定取消该订单吗?', [
+            { text: '否', onPress: () => console.log('cancel') },
+            { text: '是', onPress: () => {
+              props.dispatch({
+                type: 'order/cancel'
+              });
+
+            } },
+          ])
+
+
+
+
+        }}>取消订单</Button>
+        <Button className="zrcf-btn flex-grow-1" type="primary"  onClick={() => {
+          props.dispatch({type: 'order/pay',param:{
+            order_id:orderDetail.id,
+            return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/orderdetail?id='+orderDetail.id))
+          }});
+        }}>立即支付</Button>
       </div>
 
 

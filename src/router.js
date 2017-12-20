@@ -1,6 +1,7 @@
 import React from 'react';
 import {Router, Route, IndexRedirect} from 'dva/router';
 import * as tokenUtil from './utils/tokenUtil';
+import {is_weixin,getQueryString} from './utils/util';
 
 import App from "./routes/App.js";
 import Auth from "./routes/Auth.js";
@@ -50,7 +51,22 @@ function RouterConfig({history}) {
           if (!tokenUtil.get()) {
             let fromurl = encodeURIComponent(nextState.location.pathname+nextState.location.search);
             replaceState('/login?from='+fromurl);
+            return;
           }
+
+
+
+          if(is_weixin()&&(!tokenUtil.getOpenid())){
+              let opid = getQueryString("opid");
+              if(opid){
+                tokenUtil.setOpenid(opid);
+                return;
+              }
+            let rurl = location.href.replace(location.hash,'#'+nextState.location.pathname);
+            location.href='http://wx.51zrcf.com/getOpenid/?rurl='+encodeURIComponent(rurl);
+          }
+
+
         }} onChange={(prevState, nextState, replace) => {
           if(nextState.location.pathname == '/indexpage'){
             return;
@@ -58,12 +74,24 @@ function RouterConfig({history}) {
           if (!tokenUtil.get()) {
             let fromurl = encodeURIComponent(nextState.location.pathname+nextState.location.search);
             replace('/login?from='+fromurl);
+            return;
          }
+
+
+          if(is_weixin()&&(!tokenUtil.getOpenid())){
+            let opid = getQueryString("opid");
+            if(opid){
+              tokenUtil.setOpenid(opid);
+              return;
+            }
+            let rurl = location.href.replace(location.hash,'#'+nextState.location.pathname);
+            location.replace('http://wx.51zrcf.com/getOpenid/?rurl='+encodeURIComponent(rurl));
+          }
+
         }
         }>
           <Route path="/indexpage(/:tabIndex)" component={IndexPage}/>
           <Route path="/servicetype" component={ServiceType}/>
-          <Route path="/findpassword" component={FindPassword}/>
           <Route path="/orderdetail" component={OrderDetail}/>
           <Route path="/order" component={Order}/>
           <Route path="/serviceaddress(/:from)" component={ServiceAddress}/>
@@ -79,6 +107,7 @@ function RouterConfig({history}) {
         </Route>
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
+        <Route path="/findpassword" component={FindPassword}/>
       </Route>
     </Router>
   );

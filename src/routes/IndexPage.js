@@ -48,7 +48,8 @@ class MobileDemo extends React.Component {
       leftContent: leftContent,
       navBarTitle: navBarTitle,
       navBarMode: navBarMode,
-      order:props.order
+      order:props.order,
+      user:props.user
     };
   }
 
@@ -82,7 +83,8 @@ class MobileDemo extends React.Component {
       leftContent: leftContent,
       navBarTitle: navBarTitle,
       navBarMode: navBarMode,
-      order:nextProps.order
+      order:nextProps.order,
+      user:nextProps.user
     });
   }
 
@@ -147,10 +149,11 @@ class MobileDemo extends React.Component {
       <div className="flex-col" style={{height: '100%', paddingBottom: '1.1rem'}}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="待付款" key="1">
-            <div className="mt-20">
+
             {
                 this.state.order.orderMap?this.state.order.orderMap['dfk']['list'].map((v,i)=>(
-                  <Card full style={{border: 'none', paddingBottom: '0'}} key={v.id} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
+                  <div className="mt-20" key={v.id}>
+                  <Card full style={{border: 'none', paddingBottom: '0'}} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
                     <Card.Header
                       style={{height: '1rem', boxSizing: 'border-box', fontSize: '0.3rem', color: '#333'}}
                       title={v.cat_id}
@@ -162,21 +165,30 @@ class MobileDemo extends React.Component {
                         <div className="">预约上门时间：{v.cdate}</div>
                         <div className="mt-25 flex-row ai-center flex-jc-sb">
                           <div style={{width: '5rem'}} className="single-line">服务地址：{v.address}</div>
-                          <div className="btn-min">支付</div>
+                          <div className="btn-min"
+                               onClick={(e) => {
+                                 e.stopPropagation();
+                                 this.props.dispatch({type: 'order/pay',param:{
+                                   order_id:v.id,
+                                   return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/indexpage/orderTab'))
+                                 }});
+                               }}
+                          >支付</div>
                         </div>
                         <div className="mt-25">服务价格：<span className="color-orange">¥{v.total_amount}</span></div>
                       </div>
                     </Card.Body>
                   </Card>
+                  </div>
                 )):''
               }
-            </div>
           </TabPane>
           <TabPane tab="待接单" key="2">
-            <div className="mt-20">
+
               {
                 this.state.order.orderMap?this.state.order.orderMap['djd']['list'].map((v,i)=>(
-                  <Card full style={{border: 'none', paddingBottom: '0'}} key={v.id} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
+                  <div className="mt-20"  key={v.id}>
+                  <Card full style={{border: 'none', paddingBottom: '0'}} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
                     <Card.Header
                       style={{height: '1rem', boxSizing: 'border-box', fontSize: '0.3rem', color: '#333'}}
                       title={v.cat_id}
@@ -187,22 +199,23 @@ class MobileDemo extends React.Component {
                            style={{height: '2.46rem', fontSize: '0.3rem', color: '#333'}}>
                         <div className="">预约上门时间：{v.cdate}</div>
                         <div className="mt-25 flex-row ai-center flex-jc-sb">
-                          <div style={{width: '5rem'}} className="single-line">服务地址：{v.address}</div>
-                          <div className="btn-min">接单</div>
+                          <div style={{width: '6.9rem'}} className="single-line">服务地址：{v.address}</div>
                         </div>
                         <div className="mt-25">服务价格：<span className="color-orange">¥{v.total_amount}</span></div>
                       </div>
                     </Card.Body>
                   </Card>
+                  </div>
                 )):''
               }
-            </div>
+
           </TabPane>
           <TabPane tab="服务中" key="3">
-            <div className="mt-20">
+
               {
                 this.state.order.orderMap?this.state.order.orderMap['inService']['list'].map((v,i)=>(
-                  <Card full style={{border: 'none', paddingBottom: '0'}} key={v.id} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
+                  <div className="mt-20" key={v.id}>
+                  <Card full style={{border: 'none', paddingBottom: '0'}} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
                     <Card.Header
                       style={{height: '1rem', boxSizing: 'border-box', fontSize: '0.3rem', color: '#333'}}
                       title={v.cat_id}
@@ -219,15 +232,17 @@ class MobileDemo extends React.Component {
                       </div>
                     </Card.Body>
                   </Card>
+                  </div>
                 )):''
               }
-            </div>
+
           </TabPane>
           <TabPane tab="已完成" key="4">
-            <div className="mt-20">
+
               {
                 this.state.order.orderMap?this.state.order.orderMap['done']['list'].map((v,i)=>(
-                  <Card full style={{border: 'none', paddingBottom: '0'}} key={v.id} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
+                  <div className="mt-20" key={v.id}>
+                  <Card full style={{border: 'none', paddingBottom: '0'}} onClick={()=>{this.props.history.push('/orderdetail?id='+v.id)}}>
                     <Card.Header
                       style={{height: '1rem', boxSizing: 'border-box', fontSize: '0.3rem', color: '#333'}}
                       title={v.cat_id}
@@ -244,9 +259,10 @@ class MobileDemo extends React.Component {
                       </div>
                     </Card.Body>
                   </Card>
+                  </div>
                 )):''
               }
-            </div>
+
           </TabPane>
         </Tabs>
       </div>
@@ -255,6 +271,10 @@ class MobileDemo extends React.Component {
 
   renderMy(pageText) {
     const Item = List.Item;
+    let phone = this.state.user.userInfo.phone;
+    if(phone){
+      phone = phone.substring(0,3)+'****'+phone.substring(7,11);
+    }
     return (
       <div className="flex-col"
            style={{height: '100%', borderTop: '0.01rem solid #ddd'}}>
@@ -262,23 +282,23 @@ class MobileDemo extends React.Component {
           <div className="flex-row ai-center mt-40">
             <img src={require('../assets/head_bg.png')}
                  style={{height: '0.98rem', width: '0.98rem', margin: '0 .24rem 0 .3rem'}}/>
-            <div className="fs-32 color-4">137****7616</div>
+            <div className="fs-32 color-4">{phone}</div>
           </div>
           <div className={styles['asset-box']+''}>
             <div className={styles['asset-item']} onClick={()=>{
               this.props.history.push('/balance')
             }}>
-              <div className="fs-32 color-4">{this.props.user.userInfo.amount}</div>
+              <div className="fs-32 color-4">{this.state.user.userInfo.amount}</div>
               <div className="mt-30 fs-24 color-9">余额</div>
             </div>
             <div className={styles['asset-item']} onClick={()=>{
               this.props.history.push('/servicecard')
             }}>
-              <div className="fs-32 color-4">{this.props.user.userInfo.cardCount}次</div>
+              <div className="fs-32 color-4">{this.state.user.userInfo.cardCount}次</div>
               <div className="mt-30 fs-24 color-9">套餐卡</div>
             </div>
             <div className={styles['asset-item']}>
-              <div className="fs-32 color-4">{this.props.user.userInfo.jifen}</div>
+              <div className="fs-32 color-4">{this.state.user.userInfo.jifen}</div>
               <div className="mt-30 fs-24 color-9">积分</div>
             </div>
           </div>

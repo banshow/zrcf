@@ -18,8 +18,8 @@ function Coupon({dispatch,history,coupon}) {
             {(available||[]).map((v,i)=>(
               <div className="item" key={v.id}>
                 <div className="head flex-col jc-ai-center ai-center color-f">
-                  <div className="lh-1 fs-60">¥{v.only_amount}</div>
-                  <div className="mt-30 lh-1 fs-24">满{v.amount}元可用</div>
+                  <div className="lh-1 fs-60">¥{v.amount}</div>
+                  <div className="mt-30 lh-1 fs-24">满{v.start_amount}元可用</div>
                 </div>
                 <div className="body flex-col">
                   <div className="mt-48 lh-1 fs-28 color-3">{v.name}</div>
@@ -35,8 +35,8 @@ function Coupon({dispatch,history,coupon}) {
             {(haveUsing||[]).map((v,i)=>(
               <div className="item" key={v.id}>
                 <div className="head gray flex-col jc-ai-center ai-center color-f">
-                  <div className="lh-1 fs-60">¥{v.only_amount}</div>
-                  <div className="mt-30 lh-1 fs-24">满{v.amount}元可用</div>
+                  <div className="lh-1 fs-60">¥{v.amount}</div>
+                  <div className="mt-30 lh-1 fs-24">满{v.start_amount}元可用</div>
                 </div>
                 <div className="body flex-col">
                   <div className="mt-48 lh-1 fs-28">{v.name}</div>
@@ -52,8 +52,8 @@ function Coupon({dispatch,history,coupon}) {
             {(overdue||[]).map((v,i)=>(
               <div className="item" key={v.id}>
                 <div className="head gray flex-col jc-ai-center ai-center color-f">
-                  <div className="lh-1 fs-60">¥{v.only_amount}</div>
-                  <div className="mt-30 lh-1 fs-24">满{v.amount}元可用</div>
+                  <div className="lh-1 fs-60">¥{v.amount}</div>
+                  <div className="mt-30 lh-1 fs-24">满{v.start_amount}元可用</div>
                 </div>
                 <div className="body flex-col">
                   <div className="mt-48 lh-1 fs-28">{v.name}</div>

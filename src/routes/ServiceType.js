@@ -199,9 +199,10 @@ function ServiceType({dispatch,history,servicetype}) {
             return;
           }
           let t = types[i].children[j];
-          let cid = t.id;
+          let cid1 = types[i].id;
+          let cid2 = t.id;
           let cname = t.name;
-          history.push('/order?cid='+cid+'&cname='+cname);
+          history.push('/order?cid1='+cid1+'&cid2='+cid2+'&cname='+cname);
         }}>立即派单</Button>
       </div>
 

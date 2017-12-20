@@ -81,9 +81,13 @@ export default {
       yield put({type:'selectType',payload: {i, j}});
       const types = yield select(state=>state.servicetype.types);
       let t = types[i].children[j];
-      const {data,header} = yield call(httpservice.post, {url:'getQuotePriceForCategore',param:{id:t.id}});
-      yield put({type:'loadPrice',data:data.data});
+      //const {data,header} = yield call(httpservice.post, {url:'getQuotePriceForCategore',param:{id:t.id}});
+      yield put({type:'fetchPrice',id:t.id});
     },
+    *fetchPrice({id},{call, put}){
+      const {data,header} = yield call(httpservice.post, {url:'getQuotePriceForCategore',param:{id:id}});
+      yield put({type:'loadPrice',data:data.data});
+    }
 
   },
   subscriptions: {

@@ -38,7 +38,7 @@ function ServiceAddress(props) {
                 }
                 dispatch({
                   type:'order/selectAddress',
-                  index:v.id
+                  index:i
                 });
                 props.history.goBack();
 

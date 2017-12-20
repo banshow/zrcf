@@ -3,7 +3,9 @@ import { connect } from 'dva';
 import {NavBar, Icon} from 'antd-mobile';
 import styles from './ServiceOffer.less';
 
-function ServiceOffer({dispatch,history}) {
+function ServiceOffer({dispatch,history,servicetype}) {
+  const {day,night} = servicetype;
+  const hasPrice = !!day;
   return (
     <div className={styles.normal}>
       <NavBar
@@ -43,16 +45,16 @@ function ServiceOffer({dispatch,history}) {
               <div className="zrcf-table-cell" style={{border: 'none'}}>
                 <div className="zrcf-table">
                   <div className="zrcf-table-row">
-                    <div className="zrcf-table-cell br"><span className="color-orange">300</span>元</div>
+                    <div className="zrcf-table-cell br"><span className="color-orange">{hasPrice?day[0].price:300}</span>元</div>
                   </div>
                   <div className="zrcf-table-row">
-                    <div className="zrcf-table-cell br"><span className="color-orange">260</span>元</div>
+                    <div className="zrcf-table-cell br"><span className="color-orange">{hasPrice?day[1].price:260}</span>元</div>
                   </div>
                   <div className="zrcf-table-row">
-                    <div className="zrcf-table-cell br"><span className="color-orange">230</span>元</div>
+                    <div className="zrcf-table-cell br"><span className="color-orange">{hasPrice?day[2].price:230}</span>元</div>
                   </div>
                   <div className="zrcf-table-row">
-                    <div className="zrcf-table-cell br"><span className="color-orange">220</span>元</div>
+                    <div className="zrcf-table-cell br"><span className="color-orange">{hasPrice?day[3].price:220}</span>元</div>
                   </div>
                 </div>
               </div>
@@ -61,7 +63,7 @@ function ServiceOffer({dispatch,history}) {
               <div className="zrcf-table-cell" style={{height: '1.5rem'}}>夜间(<span className="color-orange">21:00-07:00</span>)
               </div>
               <div className="zrcf-table-cell">不限</div>
-              <div className="zrcf-table-cell br"><span className="color-orange">350</span>元</div>
+              <div className="zrcf-table-cell br"><span className="color-orange">{hasPrice?night[0].price:350}</span>元</div>
             </div>
           </div>
           <div className="fs-24 color-9">
@@ -74,8 +76,8 @@ function ServiceOffer({dispatch,history}) {
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({servicetype}) {
+  return {servicetype};
 }
 
 export default connect(mapStateToProps)(ServiceOffer);

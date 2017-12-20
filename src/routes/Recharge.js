@@ -3,13 +3,17 @@ import {connect} from 'dva';
 import {NavBar, Button, List, InputItem, Toast} from 'antd-mobile';
 import {createForm} from 'rc-form';
 import styles from './Recharge.less';
+import {getQueryString} from '../utils/util';
 
 const Item = List.Item;
 const radioIcon = <img src={require('../assets/icon_radio.png')} style={{width: '.36rem', height: '.36rem'}}/>;
 
-function Recharge({dispatch, history, form,recharge}) {
+function Recharge(props) {
+  const {dispatch, history, form,recharge} = props;
   const {getFieldProps, getFieldsValue, setFieldsValue} = form;
   const data = {...getFieldsValue(null)};
+  //const opid = getQueryString('opid');
+  //const rurl = location.href.replace(location.search,'').replace(location.hash,'#/indexpage/myTab');
   const {list} = recharge;
   if (data.amountInput) {
     data.amountSelect = '';
@@ -25,7 +29,7 @@ function Recharge({dispatch, history, form,recharge}) {
       <div id={styles['section-select']} className="bg-color-f flex-col">
         {
           new Array(Math.ceil(list.length / 3)).fill(0).map((p, j) =>
-            <div className={styles['select-list'] + ' flex-row'}>
+            <div  key={j} className={styles['select-list'] + ' flex-row'}>
               {
                 list.slice(j * 3, 3 * (j + 1)).map((cv, i) =>
                   <div key={cv.amount} className={'item' + (data.amountSelect == cv.amount ? ' active' : '')}
@@ -113,12 +117,11 @@ function Recharge({dispatch, history, form,recharge}) {
             Toast.info('请输入充值金额', 2);
             return;
           }
-          console.log(amount)
           dispatch({
-            type: 'user/recharge',
-            amount: amount
+            type: 'recharge/recharge',
+            param: {amount:amount}
           })
-          history.goBack()
+          //history.goBack()
         }}>
           确认支付
         </Button>

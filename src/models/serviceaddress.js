@@ -180,7 +180,7 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query}) => {
-        if (pathname === '/serviceaddress' || pathname === '/order') {
+        if (pathname === '/serviceaddress' || pathname === '/order'|| pathname === '/serviceaddress/order') {
           dispatch({type: 'list'});
         } else if (pathname.startsWith('/address/add')) {
           dispatch({type: 'init', files: [], pics: [], currentData: []});
