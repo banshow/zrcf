@@ -5,23 +5,36 @@ export default {
   namespace: 'order',
   state: {
     currentData:{
-      payway:'WCP',
-      addressId:0
+      payway:'',
+      addressId:0,
+      cart_type_id:''
     },
+    orderTabKey:'1',
     orderDetail:{}
   },
   reducers: {
     // togglePayway(state,{payway}){
     //   return {...state,currentPayway:payway}
     // },
+    toggleOrderTabKey(state,{key}){
+      return {...state,orderTabKey:key};
+    },
     init(state,{payload}){
       return {...state,currentData:{...state.currentData,...payload}}
+    },
+    initCurrentData(state){
+      return {...state,currentData:{ payway:'',
+          addressId:0,
+          cart_type_id:''}}
     },
     syncCurrentData(state,{payload}){
       return {...state,currentData:{...state.currentData,...payload}}
     },
     selectAddress(state,{index}){
       return {...state,currentData:{...state.currentData,addressId:index}}
+    },
+    selectCart(state,{cart_type_id}){
+      return {...state,currentData:{...state.currentData,cart_type_id:cart_type_id}}
     },
     loadOrderList(state,{orderMap}){
       let newState =  {...state,orderMap:orderMap};
@@ -66,9 +79,18 @@ export default {
         contact_tel: phone,
         contact_phone: phone,
         address: param.addr.address,
-        remark: param.remark
+        remark: param.remark,
+        cart_type_id: param.cart_type_id || '',
+        onlinepaytype: param.payway || ''
       };
       const {data, header} = yield call(httpservice.post, {url: 'customerOrderOperation', param: param});
+      yield put({ type: 'initCurrentData'});
+      if(param.onlinepaytype == 'wxpay'){
+        yield put({ type: 'pay',param:{
+            order_id:data.data.order_id,
+            return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,''))}});
+        return;
+      }
       success();
     },
     *pay({param}, {call}){

@@ -24,7 +24,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(({ pathname, query }) => {
-        if (pathname==='/indexpage/myTab') {
+        if (pathname==='/indexpage/myTab' || pathname==='/order') {
           dispatch({ type: 'fetch'});
         }
       });

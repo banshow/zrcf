@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import {NavBar, Icon,  Button, InputItem,Modal} from 'antd-mobile';
 import styles from './OrderDetail.less';
+import {orderStatus} from '../common/dict';
 const alert = Modal.alert;
 function OrderDetail(props) {
   const {orderDetail} = props.order;
@@ -51,11 +52,11 @@ function OrderDetail(props) {
           </div>
           <div className="flex-row">
             <div className="item-title">支付方式</div>
-            <div>：在线支付(微信)</div>
+            <div>：{orderDetail.yikaitong&&orderDetail.yikaitong!='0'?'一卡通':'在线支付(微信)'}</div>
           </div>
           <div className="flex-row">
             <div className="item-title">订单状态</div>
-            <div>：<span className="color-bp">{orderDetail.order_status_txt}</span></div>
+            <div>：<span className="color-bp">{orderDetail.order_status_txt || orderStatus[orderDetail.order_status]}</span></div>
           </div>
           <div className="flex-row">
             <div className="item-title">工程师</div>
@@ -117,7 +118,7 @@ function OrderDetail(props) {
 
 
         }}>取消订单</Button>
-        <Button className="zrcf-btn flex-grow-1" type="primary"  onClick={() => {
+        <Button className={'zrcf-btn flex-grow-1'+(orderDetail.pay_status=='1'?' zrcf-hide':'')} type="primary"  onClick={() => {
           props.dispatch({type: 'order/pay',param:{
             order_id:orderDetail.id,
             return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/orderdetail?id='+orderDetail.id))

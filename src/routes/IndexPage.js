@@ -147,7 +147,9 @@ class MobileDemo extends React.Component {
   renderOrder(pageText) {
     return (
       <div className="flex-col" style={{height: '100%', paddingBottom: '1.1rem'}}>
-        <Tabs defaultActiveKey="1">
+        <Tabs activeKey={this.state.order.orderTabKey} onChange={(key)=>{
+          this.props.dispatch({type: 'order/toggleOrderTabKey',key:key});
+        }}>
           <TabPane tab="待付款" key="1">
 
             {
@@ -288,13 +290,13 @@ class MobileDemo extends React.Component {
             <div className={styles['asset-item']} onClick={()=>{
               this.props.history.push('/balance')
             }}>
-              <div className="fs-32 color-4">{this.state.user.userInfo.amount}</div>
+              <div className="fs-32 color-4">{this.state.user.userInfo.wallet}</div>
               <div className="mt-30 fs-24 color-9">余额</div>
             </div>
             <div className={styles['asset-item']} onClick={()=>{
               this.props.history.push('/servicecard')
             }}>
-              <div className="fs-32 color-4">{this.state.user.userInfo.cardCount}次</div>
+              <div className="fs-32 color-4">{this.state.user.userInfo.yikatong}次</div>
               <div className="mt-30 fs-24 color-9">套餐卡</div>
             </div>
             <div className={styles['asset-item']}>

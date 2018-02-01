@@ -111,13 +111,14 @@ function getPrice(timeStr,day,night){
 function Order(props) {
   const {dispatch} = props;
   const {currentData} = props.order;
+  const {userInfo} = props.user;
   const {day,night} = props.servicetype;
   const {cid1,cid2,cname} = props.location.query;
   const {list} = props.serviceaddress;
-  const {getFieldProps,getFieldsValue,setFieldsValue} = props.form;
+  const {getFieldProps,getFieldsValue,setFieldsValue,getFieldValue} = props.form;
   const radioIcon = <img src={require('../assets/icon_radio.png')} style={{width:'.36rem',height:'.36rem'}}/>;
   const data = {...currentData,...getFieldsValue(null)};
-  const {addressId} = data;
+  const {addressId,cart_type_id} = data;
   let addr = null;
   if(list.length>=addressId+1){
     addr = {...list[addressId]}
@@ -152,6 +153,12 @@ function Order(props) {
           type="hidden"
           {...getFieldProps('cid2',{
             initialValue: cid2
+          })}
+        />
+        <InputItem
+          type="hidden"
+          {...getFieldProps('cart_type_id',{
+            initialValue: cart_type_id
           })}
         />
         <InputItem
@@ -236,13 +243,19 @@ function Order(props) {
         />
       </List>
       <List className="mt-20">
-          {/*<Item extra={<div className="fs-30 color-6"><span className="color-orange">4</span><span>次上门服务套餐卡</span></div>} onClick={() => {}}>*/}
-            {/*一卡通*/}
-          {/*</Item>*/}
-         <Item extra={data.payway=='WCP'?radioIcon:''} onClick={() => {setFieldsValue({'payway':'WCP'})}}>
+          <Item extra={<div className="fs-30 color-6"><span className="color-orange">{userInfo.yikatong}</span><span>次上门服务套餐卡</span>{!data.payway&&cart_type_id?radioIcon:''}</div>} onClick={() => {
+            dispatch({
+              type:'order/syncCurrentData',
+              payload:getFieldsValue(null)
+            })
+            props.history.push('/servicecard?from=order')
+          }}>
+            一卡通
+          </Item>
+         <Item extra={data.payway=='wxpay'?radioIcon:''} onClick={() => {setFieldsValue({'payway':'wxpay'})}}>
             微信支付
           </Item>
-          <Item extra={data.payway=='BMP'?radioIcon:''} onClick={() => {setFieldsValue({'payway':'BMP'})}}>
+          <Item extra={data.payway=='wallet'?radioIcon:''} onClick={() => {setFieldsValue({'payway':'wallet'})}}>
             余额支付
           </Item>
       </List>
@@ -279,7 +292,10 @@ function Order(props) {
                 return;
               }
             }
-
+            if(!getFieldValue('cart_type_id') && !getFieldValue('payway')){
+              Toast.info('请选择支付方式', 2);
+              return;
+            }
               props.dispatch({
                 type: 'order/insert',
                 param: {addr:addr,...values},
@@ -326,9 +342,6 @@ function Order(props) {
         <PickerView
           value={selectedTime}
           onChange={(val,i)=>{
-            console.log(i)
-            console.log(val)
-
             if(i==0){
              if(fromToday&&val[0]==ctimeStr){
                 setFieldsValue({'times':times,selectedTime:[val[0],times[1][0].value]})
