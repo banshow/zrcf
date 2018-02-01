@@ -38,6 +38,7 @@ import Invoice from "./routes/Invoice.js";
 import ApplyInvoice from "./routes/ApplyInvoice.js";
 
 import InvoiceRecord from "./routes/InvoiceRecord.js";
+import ResultPage from "./routes/Result.js";
 
 function RouterConfig({history}) {
   return (
@@ -108,6 +109,7 @@ function RouterConfig({history}) {
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
         <Route path="/findpassword" component={FindPassword}/>
+        <Route path="/result" component={ResultPage}/>
       </Route>
     </Router>
   );

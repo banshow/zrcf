@@ -11,7 +11,7 @@ function Balance(props) {
         <div className="mt-40 fs-34 color-35">余额</div>
         <div className="color-35 fs-54"  style={{height:'.8rem',lineHeight:'.8rem',marginTop:'.34rem'}}>
           <span className="va-top">¥</span>
-          <span className="fs-80 va-top">{props.user.userInfo.amount}</span>
+          <span className="fs-80 va-top">{props.user.userInfo.wallet}</span>
         </div>
       </div>
       <div className="fixed-lb width-full">

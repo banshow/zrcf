@@ -7,7 +7,6 @@ const Brief = Item.Brief;
 function ServiceCard({dispatch, history, servicecard, location}) {
   const {cardData, typeData} = servicecard;
   const {from} = location.query;
-  console.log(from)
   const keys = Object.keys(cardData) || [];
   return (
     <div className={styles.normal}>
@@ -19,8 +18,12 @@ function ServiceCard({dispatch, history, servicecard, location}) {
       >服务套餐卡</NavBar>
       <List id={styles['my-list']}>
         {(typeData).map((v) => (
-          cardData[v.id] ?
+          !cardData[v.id] ?
             <Item multipleLine extra={<div className="btn-min" onClick={() => {
+              if(from != 'order'){
+                history.replaceState(null,'/servicetype');
+                return;
+              }
               dispatch({
                 type: 'order/selectCart',
                 cart_type_id:v.id,
