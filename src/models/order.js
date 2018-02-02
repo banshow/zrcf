@@ -88,7 +88,9 @@ export default {
       if(param.onlinepaytype == 'wxpay'){
         yield put({ type: 'pay',param:{
             order_id:data.data.order_id,
-            return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,''))}});
+            return_url:'#/result/order'
+        }
+        });
         return;
       }
       success();

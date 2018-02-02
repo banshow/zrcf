@@ -121,7 +121,8 @@ function OrderDetail(props) {
         <Button className={'zrcf-btn flex-grow-1'+(orderDetail.pay_status=='1'?' zrcf-hide':'')} type="primary"  onClick={() => {
           props.dispatch({type: 'order/pay',param:{
             order_id:orderDetail.id,
-            return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/orderdetail?id='+orderDetail.id))
+            //return_url:encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/orderdetail?id='+orderDetail.id))
+            return_url:'#/result/pay4order'
           }});
         }}>立即支付</Button>
       </div>

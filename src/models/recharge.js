@@ -20,7 +20,7 @@ export default {
     },
     *recharge({param},{call,put}){
       //const return_url = encodeURIComponent(location.href.replace(location.search,'').replace(location.hash,'#/indexpage/myTab'));
-      const return_url = '#/indexpage/myTab';
+      const return_url = '#/result/recharge';
       console.log(return_url)
       param = {...param,...{
         type_id:0,

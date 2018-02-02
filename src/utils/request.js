@@ -11,7 +11,7 @@ function checkStatus(response) {
   throw error;
 }
 function checkData(data) {
-  if(data.error_code!==0){
+  if(data.error_code!==0&&data.error_code!==1){
     throw new Error(data.msg,data.error_code);
   }
 }

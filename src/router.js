@@ -109,7 +109,7 @@ function RouterConfig({history}) {
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
         <Route path="/findpassword" component={FindPassword}/>
-        <Route path="/result" component={ResultPage}/>
+        <Route path="/result/:type" component={ResultPage}/>
       </Route>
     </Router>
   );

@@ -18,7 +18,7 @@ function ServiceCard({dispatch, history, servicecard, location}) {
       >服务套餐卡</NavBar>
       <List id={styles['my-list']}>
         {(typeData).map((v) => (
-          !cardData[v.id] ?
+          cardData[v.id] ?
             <Item multipleLine extra={<div className="btn-min" onClick={() => {
               if(from != 'order'){
                 history.replaceState(null,'/servicetype');
@@ -38,7 +38,7 @@ function ServiceCard({dispatch, history, servicecard, location}) {
               e.stopPropagation();
               dispatch({type: 'servicecard/pay',param:{
                 cart_type_id:v.id,
-                return_url:encodeURIComponent(location.href)
+                return_url:'#/result/card'
               }});
             }}>购买</div>} key={v.id}>
               <div className="lh-1 fs-32">{v.title}</div>
