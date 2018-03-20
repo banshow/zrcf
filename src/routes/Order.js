@@ -88,6 +88,11 @@ function getPrice(timeStr,day,night){
   if(h>=21||h<7){
     return night[0]['price'];
   }
+
+  if(timeStr.substring(0,10)!==ctimeStr.substring(0,10)){
+    return day[3]['price'];
+  }
+
   let _2h = 2*60*60*1000;
   let _4h = 2*_2h;
   let dm = time.getTime()-ctime.getTime();
@@ -100,11 +105,11 @@ function getPrice(timeStr,day,night){
     return day[1]['price'];
   }
 
-  if(timeStr.substring(0,10)==ctimeStr.substring(0,10)){
+  //if(timeStr.substring(0,10)==ctimeStr.substring(0,10)){
     return day[2]['price'];
-  }
+  //}
 
-  return day[3]['price'];
+  //return day[3]['price'];
 
 }
 

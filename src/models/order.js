@@ -85,15 +85,15 @@ export default {
       };
       const {data, header} = yield call(httpservice.post, {url: 'customerOrderOperation', param: param});
       yield put({ type: 'initCurrentData'});
+      success();
       if(param.onlinepaytype == 'wxpay'){
         yield put({ type: 'pay',param:{
             order_id:data.data.order_id,
             return_url:'#/result/order'
         }
         });
-        return;
       }
-      success();
+
     },
     *pay({param}, {call}){
       param = {...param,...{
